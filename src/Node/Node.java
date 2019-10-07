@@ -11,11 +11,11 @@ public abstract class Node {
 
     public Circle nodeCircle;
 
-    private int key;
+    private ArrayList<Integer> keys;
 
     private int level;
 
-    private Object value;
+    private ArrayList<Object> values;
 
     /**
      * 初始化画图属性,根据node的level和panel的大小初始化nodeCricle的位置坐标及半径
@@ -33,20 +33,24 @@ public abstract class Node {
 
     /**
      * 构造函数
-     * @param key 排序key值
+     * @param keys 排序key值
      */
-    public Node(int key){
-        this.key = key;
+    public Node(ArrayList<Integer> keys){
+        this.keys = keys;
+    }
+
+    Node(){
+
     }
 
     /**
      * 构造函数
-     * @param key  排序key值
-     * @param value   承载value值
+     * @param keys  排序key值
+     * @param values   承载value值
      */
-    Node(int key, Object value){
-        this.key = key;
-        this.value = value;
+    Node(ArrayList<Integer> keys, ArrayList<Object> values){
+        this.keys = keys;
+        this.values = values;
     }
 
     public ArrayList<Node> getChildren(){
@@ -64,7 +68,8 @@ public abstract class Node {
 
     /**
      * 设置子节点
-     * @param loc
+     * @param loc 子节点位置
+     * @param targetNode  目标子节点
      */
     public void setChild(int loc, Node targetNode){
         children.set(loc, targetNode);
@@ -72,18 +77,18 @@ public abstract class Node {
 
     /**
      * 设置parent
-     * @param targetNode
+     * @param targetNode 父节点
      */
     public void setParent(Node targetNode){
         this.parent = targetNode;
     }
 
-    public int getKey() {
-        return key;
+    public ArrayList<Integer> getKeys() {
+        return keys;
     }
 
-    public void setKey(int key) {
-        this.key = key;
+    public void setKeys(ArrayList<Integer> keys) {
+        this.keys = keys;
     }
 
     public int getLevel() {
@@ -94,11 +99,27 @@ public abstract class Node {
         this.level = level;
     }
 
-    public Object getValue() {
-        return value;
+    public ArrayList<Object> getValues() {
+        return values;
     }
 
-    public void setValue(Object value) {
-        this.value = value;
+    public void setValues(ArrayList<Object> values) {
+        this.values = values;
+    }
+
+    public int getKey(int loc) {
+        return this.keys.get(loc);
+    }
+
+    public void setKey(int loc, int key) {
+        this.keys.set(loc, key);
+    }
+
+    public Object getValue(int loc) {
+        return this.values.get(loc);
+    }
+
+    public void setValue(int loc, Object value) {
+        this.values.set(loc, value);
     }
 }

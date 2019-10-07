@@ -11,7 +11,7 @@ public class NodePrintConsumer implements Consumer<Node> {
             System.out.print("[ ] ");
         }
         else{
-            System.out.print("[" + o.getKey() + "] ");
+            System.out.print("[" + o.getKeys() + "] ");
         }
     }
 }

@@ -8,18 +8,28 @@ public class BinaryTreeNode extends Node {
     public static int LEFT_CHILD = 0;
     public static int RIGHT_CHILD = 1;
 
-    public BinaryTreeNode(int key){
-        super(key);
+    private void initChilder(){
         children = new ArrayList<Node>(2);
         children.add(null);
         children.add(null);
     }
 
+    public BinaryTreeNode(int key){
+        ArrayList<Integer> keys = new ArrayList<>(1);
+        keys.add(key);
+        this.setKeys(keys);
+        initChilder();
+    }
+
+
     public BinaryTreeNode(int key, Object object){
-        super(key);
-        children = new ArrayList<Node>(2);
-        children.add(null);
-        children.add(null);
+        ArrayList<Integer> keys = new ArrayList<>(1);
+        keys.add(key);
+        ArrayList<Object> values = new ArrayList<>(1);
+        values.add(object);
+        this.setKeys(keys);
+        this.setValues(values);
+        initChilder();
     }
 
     public boolean hasLeft(){
@@ -80,6 +90,10 @@ public class BinaryTreeNode extends Node {
         nodeCircle.setCenterY(y);
         nodeCircle.setRadius(circleRadius);
         nodeCircle.setAccessibleText(String.valueOf(getKey()));
+    }
+
+    public int getKey(){
+        return this.getKey(0);
     }
 
 

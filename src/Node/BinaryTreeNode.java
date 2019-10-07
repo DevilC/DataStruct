@@ -8,20 +8,29 @@ public class BinaryTreeNode extends Node {
     public static int LEFT_CHILD = 0;
     public static int RIGHT_CHILD = 1;
 
-    private void initChilder(){
+    //初始化children属性
+    private void initChildren(){
         children = new ArrayList<Node>(2);
         children.add(null);
         children.add(null);
     }
 
+    /**
+     * 构造函数，输入key
+     * @param key
+     */
     public BinaryTreeNode(int key){
         ArrayList<Integer> keys = new ArrayList<>(1);
         keys.add(key);
         this.setKeys(keys);
-        initChilder();
+        initChildren();
     }
 
-
+    /**
+     * 构造函数， 输入key和value
+     * @param key
+     * @param object
+     */
     public BinaryTreeNode(int key, Object object){
         ArrayList<Integer> keys = new ArrayList<>(1);
         keys.add(key);
@@ -29,30 +38,54 @@ public class BinaryTreeNode extends Node {
         values.add(object);
         this.setKeys(keys);
         this.setValues(values);
-        initChilder();
+        initChildren();
     }
 
+    /**
+     * 是否含有左孩子
+     * @return
+     */
     public boolean hasLeft(){
         return !(null == this.getChild(LEFT_CHILD));
     }
 
+    /**
+     * 是否含有右孩子
+     * @return
+     */
     public boolean hasRight(){
         return !(null == this.getChild(RIGHT_CHILD));
     }
 
+    /**
+     * 获取左孩子
+     * @return
+     */
     public BinaryTreeNode getLeftChild(){
         return (BinaryTreeNode) getChild(LEFT_CHILD);
     }
 
+    /**
+     * 获取右孩子
+     * @return
+     */
     public BinaryTreeNode getRightChild(){
         return (BinaryTreeNode) getChild(RIGHT_CHILD);
     }
 
+    /**
+     * 设置左孩子
+     * @param targetNode
+     */
     public void setLeftChild(BinaryTreeNode targetNode){
         this.setChild(LEFT_CHILD, targetNode);
         targetNode.setParent(this);
     }
 
+    /**
+     * 设置右孩子
+     * @param targetNode
+     */
     public void setRightChild(BinaryTreeNode targetNode){
         this.setChild(RIGHT_CHILD, targetNode);
         targetNode.setParent(this);
@@ -92,8 +125,20 @@ public class BinaryTreeNode extends Node {
         nodeCircle.setAccessibleText(String.valueOf(getKey()));
     }
 
+    /**
+     * 获取键值
+     * @return
+     */
     public int getKey(){
         return this.getKey(0);
+    }
+
+    /**
+     * 获取value
+     * @return
+     */
+    public Object getValue(){
+        return this.getValue(0);
     }
 
 

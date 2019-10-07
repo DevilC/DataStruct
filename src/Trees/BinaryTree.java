@@ -19,12 +19,12 @@ public class BinaryTree extends TreeBase {
     public BinaryTree(){};
 
     @Override
-    public Node getRoot() {
+    public BinaryTreeNode getRoot() {
         return this.root;
     }
 
     @Override
-    public Node getNode(int key) {
+    public BinaryTreeNode getNode(int key) {
         return new BinaryTreeNode(key);
     };
 

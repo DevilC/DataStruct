@@ -8,11 +8,12 @@ public class BinaryTreeNode extends Node {
     public static int LEFT_CHILD = 0;
     public static int RIGHT_CHILD = 1;
 
-    //初始化children属性
+    //初始化children属性、subTreeHeight
     private void initChildren(){
         children = new ArrayList<Node>(2);
         children.add(null);
         children.add(null);
+        this.subTreeHeight = 1;
     }
 
     /**
@@ -122,7 +123,8 @@ public class BinaryTreeNode extends Node {
         nodeCircle.setCenterX(x);
         nodeCircle.setCenterY(y);
         nodeCircle.setRadius(circleRadius);
-        nodeCircle.setAccessibleText(String.valueOf(getKey()));
+//        nodeCircle.setAccessibleText(String.valueOf(getKey()));
+        nodeCircle.setAccessibleText(this.toString());
     }
 
     /**
@@ -139,6 +141,11 @@ public class BinaryTreeNode extends Node {
      */
     public Object getValue(){
         return this.getValue(0);
+    }
+
+    @Override
+    public String toString(){
+        return "key: " + this.getKey() + ";level: " + this.getLevel() + ";subTreeHeight: " + this.getSubTreeHeight();
     }
 
 

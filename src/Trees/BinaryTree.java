@@ -32,9 +32,9 @@ public class BinaryTree extends TreeBase {
     public int add(Node addNode) throws NodeTypeErrorException {
         int level =  addAndUpdateLevel(addNode, 0);
         /**
-         * 更新树深度
+         * 更新树高度
          */
-        updateLevel(level);
+        updateHeight();
         return level;
     }
 
@@ -61,29 +61,33 @@ public class BinaryTree extends TreeBase {
             if(root.getKey() >= binaryTreeNode.getKey()){
                 if(!root.hasLeft()){
                     root.setLeftChild(binaryTreeNode);
+                    root.updateSubTreeHeight();
                     return level + 1;
                 }
                 else {
                     BinaryTree subTree = new BinaryTree(root.getLeftChild());
-                    return subTree.addAndUpdateLevel(addNode, level + 1);
+                    int subLevel =  subTree.addAndUpdateLevel(addNode, level + 1);
+                    root.updateSubTreeHeight();
+                    return subLevel;
                 }
             }else{
                 if(!root.hasRight()){
                     root.setRightChild(binaryTreeNode);
+                    root.updateSubTreeHeight();
                     return level + 1;
                 }
                 else{
                     BinaryTree subTree = new BinaryTree(root.getRightChild());
-                    return subTree.addAndUpdateLevel(addNode, level + 1);
+                    int subLevel =  subTree.addAndUpdateLevel(addNode, level + 1);
+                    root.updateSubTreeHeight();
+                    return subLevel;
                 }
             }
         }
     }
 
-    protected void updateLevel(int level){
-        if(level > treeLevel){
-            treeLevel = level;
-        }
+    protected void updateHeight(){
+        this.treeHeight = root.getSubTreeHeight();
     }
 
     @Override

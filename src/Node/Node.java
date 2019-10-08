@@ -17,6 +17,41 @@ public abstract class Node {
 
     private ArrayList<Object> values;
 
+    //以此节点为根节点的子树高度
+    int subTreeHeight;
+
+    /**
+     * 更新节点子树高度，高度为最高孩子树高度+1
+     */
+    public void updateSubTreeHeight(){
+        int maxChildTreeHeight = 0;
+        for(Node child: children){
+            if(child == null){
+                continue;
+            }
+            if(child.subTreeHeight > maxChildTreeHeight){
+                maxChildTreeHeight = child.subTreeHeight;
+            }
+        }
+        this.subTreeHeight = maxChildTreeHeight + 1;
+    }
+
+    /**
+     * 获取以此节点为根节点的子树高度，初始值为1
+     * @return
+     */
+    public int getSubTreeHeight(){
+        return subTreeHeight;
+    }
+
+    /**
+     *  更新以此节点为根节点的子树高度
+     * @param height
+     */
+    public void setSubTreeHeight(int height){
+        subTreeHeight = height;
+    }
+
     /**
      * 初始化画图属性,根据node的level和panel的大小初始化nodeCricle的位置坐标及半径
      * @param width   宽度

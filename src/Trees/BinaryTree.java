@@ -24,6 +24,12 @@ public class BinaryTree extends TreeBase {
     }
 
     @Override
+    public void setRoot(Node root) {
+        this.root = (BinaryTreeNode) root;
+        updateHeight();
+    }
+
+    @Override
     public BinaryTreeNode getNode(int key) {
         return new BinaryTreeNode(key);
     };

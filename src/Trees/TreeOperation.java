@@ -13,6 +13,12 @@ public interface TreeOperation {
     Node getRoot();
 
     /**
+     * 设置树的根节点
+     * @return
+     */
+    void setRoot(Node root);
+
+    /**
      * 根据key获得节点
      * @param key
      * @return

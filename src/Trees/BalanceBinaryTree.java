@@ -9,7 +9,7 @@ public class BalanceBinaryTree extends BinaryTree {
         RIGHT_ROTATE, LEFT_ROTATE, RIGHT_LEFT_ROTATE, LEFT_RIGHT_ROTATE, NOT_ROTATE;
 
         //获取旋转类型
-        public RotateType getRotateType(BalanceBinaryTree tree){
+        public static RotateType getRotateType(BalanceBinaryTree tree){
            BinaryTreeNode root = tree.getRoot();
             int leftHeight = root.hasLeft() ? root.getLeftChild().getSubTreeHeight() : 0;
             int rightHeight = root.hasRight() ? root.getRightChild().getSubTreeHeight() : 0;
@@ -77,12 +77,22 @@ public class BalanceBinaryTree extends BinaryTree {
             int childLeftHeighgt = oldRoot.hasLeft() ? oldRoot.getLeftChild().getSubTreeHeight() : 0;
             int childRightHeight = oldRoot.hasRight() ? oldRoot.getRightChild().getSubTreeHeight() : 0;
             int subHeight = childLeftHeighgt - childRightHeight;
+
             BinaryTreeNode newRoot = oldRoot.getLeftChild();
+            if(oldRoot.getParent() != null){
+                //不为最外层根节点,需更新
+                oldRoot.getParent().replaceChild(oldRoot, newRoot);
+            }
+            newRoot.setParent(oldRoot.getParent());
             oldRoot.setLeftChild(newRoot.getRightChild());
             newRoot.setRightChild(oldRoot);
             oldRoot.setSubTreeHeight(oldRoot.getSubTreeHeight() - subHeight);
             oldRoot.setLevel(oldRoot.getLevel() + 1);
             newRoot.setLevel(newRoot.getLevel() - 1);
+            if(newRoot.getLeftChild() != null){
+                newRoot.getLeftChild().setLevel(newRoot.getLeftChild().getLevel() - 1);
+            }
+
             return newRoot;
         }
 
@@ -91,12 +101,22 @@ public class BalanceBinaryTree extends BinaryTree {
             int childLeftHeighgt = oldRoot.hasLeft() ? oldRoot.getLeftChild().getSubTreeHeight() : 0;
             int childRightHeight = oldRoot.hasRight() ? oldRoot.getRightChild().getSubTreeHeight() : 0;
             int subHeight = childRightHeight - childLeftHeighgt;
+
             BinaryTreeNode newRoot = oldRoot.getRightChild();
+            if(oldRoot.getParent() != null) {
+                //不为最外层根节点
+                oldRoot.getParent().replaceChild(oldRoot, newRoot);
+            }
+            newRoot.setParent(oldRoot.getParent());
             oldRoot.setRightChild(newRoot.getLeftChild());
             newRoot.setLeftChild(oldRoot);
             oldRoot.setSubTreeHeight(oldRoot.getSubTreeHeight() - subHeight);
             oldRoot.setLevel(oldRoot.getLevel() + 1);
             newRoot.setLevel(newRoot.getLevel() - 1);
+            if(newRoot.getRightChild() != null) {
+                newRoot.getRightChild().setLevel(newRoot.getRightChild().getLevel() - 1);
+            }
+
             return newRoot;
         }
     }
@@ -105,9 +125,12 @@ public class BalanceBinaryTree extends BinaryTree {
         super(root);
     }
 
+    public BalanceBinaryTree(){};
+
     @Override
     public int add(Node addNode) throws NodeTypeErrorException {
         int height =  addAndUpdateLevel(addNode, 0);
+        reshapeToBalance();
         /**
          * 更新树深度
          */
@@ -137,7 +160,8 @@ public class BalanceBinaryTree extends BinaryTree {
     }
 
     private void doReshape(){
-
+        RotateType rotateType = RotateType.getRotateType(this);
+        rotateType.doRotate(this);
     }
 
     /**

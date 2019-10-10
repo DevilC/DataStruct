@@ -118,6 +118,20 @@ public abstract class Node {
         this.parent = targetNode;
     }
 
+    public Node getParent(){
+        return parent;
+    }
+
+    public boolean replaceChild(Node oldChild, Node newChild){
+        for(int i=0; i<children.size(); i++){
+            if(children.get(i) == oldChild){
+                children.set(i, newChild);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<Integer> getKeys() {
         return keys;
     }

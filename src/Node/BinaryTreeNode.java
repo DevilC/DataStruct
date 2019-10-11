@@ -149,8 +149,10 @@ public class BinaryTreeNode extends Node {
 
     @Override
     public String toString(){
-        return "key: " + this.getKey() + ";level: " + this.getLevel() + ";subTreeHeight: " + this.getSubTreeHeight();
+        //return "key: " + this.getKey() + ";level: " + this.getLevel() + ";subTreeHeight: " + this.getSubTreeHeight();
+        return ""+getSubTreeHeight();
     }
+
 
 
 }

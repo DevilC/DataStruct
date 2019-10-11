@@ -117,7 +117,7 @@ public class BinaryTree extends TreeBase {
      * @param height  画布高度
      */
     public void initNodeGraphField(int width, int height){
-        travelNodesBreathFirst(new NodeGraphInitConsumer(width, height));
+        travelNodesBreathFirst(new NodeGraphInitConsumer(width, height), this.root);
     }
 
 //    @Override
@@ -127,26 +127,4 @@ public class BinaryTree extends TreeBase {
 //        NodePrintConsumer consumer = new NodePrintConsumer();
 //        travelNodesBreathFirst(rootQueue, consumer);
 //    }
-
-    public void travelNodesBreathFirst(Consumer<Node> nodeConsumer){
-        Queue<BinaryTreeNode> rootQueue = new LinkedList<>();
-        rootQueue.add(this.root);
-
-        travelNodesBreathFirst(rootQueue, nodeConsumer, 0);
-    }
-
-    public void travelNodesBreathFirst(Queue<BinaryTreeNode> nodeQueue, Consumer<Node> nodeConsumer, int level){
-        Queue<BinaryTreeNode> nextLevelNodeQueue = new LinkedList<>();
-        while(!nodeQueue.isEmpty()){
-            BinaryTreeNode tmpNode = nodeQueue.remove();
-            nodeConsumer.accept(tmpNode);
-            if(tmpNode != null) {
-                nextLevelNodeQueue.add(tmpNode.getLeftChild());
-                nextLevelNodeQueue.add(tmpNode.getRightChild());
-            }
-        }
-        if(!nextLevelNodeQueue.isEmpty()){
-            travelNodesBreathFirst(nextLevelNodeQueue, nodeConsumer, level + 1);
-        }
-    }
 }

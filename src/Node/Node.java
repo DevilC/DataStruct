@@ -37,6 +37,18 @@ public abstract class Node {
     }
 
     /**
+     * 根据parent更新节点深度
+     */
+    public void updateLevel(){
+        if(this.parent != null){
+            this.setLevel(this.getParent().getLevel() + 1);
+        }
+        else{
+            this.setLevel(0);
+        }
+    }
+
+    /**
      * 获取以此节点为根节点的子树高度，初始值为1
      * @return
      */
@@ -170,5 +182,15 @@ public abstract class Node {
 
     public void setValue(int loc, Object value) {
         this.values.set(loc, value);
+    }
+
+    //是否有孩子
+    public boolean hasChild(){
+        for(Node child: children){
+            if(child != null){
+                return true;
+            }
+        }
+        return false;
     }
 }

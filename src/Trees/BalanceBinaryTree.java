@@ -3,6 +3,8 @@ package Trees;
 import Node.BinaryTreeNode;
 import Node.Node;
 import Util.NodeTypeErrorException;
+import Util.UpdateNodeLevelConsumer;
+import Util.UpdateTreeHeightConsumer;
 
 public class BalanceBinaryTree extends BinaryTree {
     public enum RotateType{
@@ -74,10 +76,6 @@ public class BalanceBinaryTree extends BinaryTree {
 
         //右旋转，返回根节点
         private BinaryTreeNode rightRotate(BinaryTreeNode oldRoot){
-            int childLeftHeighgt = oldRoot.hasLeft() ? oldRoot.getLeftChild().getSubTreeHeight() : 0;
-            int childRightHeight = oldRoot.hasRight() ? oldRoot.getRightChild().getSubTreeHeight() : 0;
-            int subHeight = childLeftHeighgt - childRightHeight;
-
             BinaryTreeNode newRoot = oldRoot.getLeftChild();
             if(oldRoot.getParent() != null){
                 //不为最外层根节点,需更新
@@ -85,23 +83,17 @@ public class BalanceBinaryTree extends BinaryTree {
             }
             newRoot.setParent(oldRoot.getParent());
             oldRoot.setLeftChild(newRoot.getRightChild());
-            newRoot.setRightChild(oldRoot);
-            oldRoot.setSubTreeHeight(oldRoot.getSubTreeHeight() - subHeight);
-            oldRoot.setLevel(oldRoot.getLevel() + 1);
-            newRoot.setLevel(newRoot.getLevel() - 1);
-            if(newRoot.getLeftChild() != null){
-                newRoot.getLeftChild().setLevel(newRoot.getLeftChild().getLevel() - 1);
+            if(newRoot.getRightChild() != null){
+                newRoot.getRightChild().setParent(oldRoot);
             }
+            newRoot.setRightChild(oldRoot);
+            oldRoot.setParent(newRoot);
 
             return newRoot;
         }
 
         //左旋转，返回根节点
         private BinaryTreeNode leftRotate(BinaryTreeNode oldRoot){
-            int childLeftHeighgt = oldRoot.hasLeft() ? oldRoot.getLeftChild().getSubTreeHeight() : 0;
-            int childRightHeight = oldRoot.hasRight() ? oldRoot.getRightChild().getSubTreeHeight() : 0;
-            int subHeight = childRightHeight - childLeftHeighgt;
-
             BinaryTreeNode newRoot = oldRoot.getRightChild();
             if(oldRoot.getParent() != null) {
                 //不为最外层根节点
@@ -109,13 +101,11 @@ public class BalanceBinaryTree extends BinaryTree {
             }
             newRoot.setParent(oldRoot.getParent());
             oldRoot.setRightChild(newRoot.getLeftChild());
-            newRoot.setLeftChild(oldRoot);
-            oldRoot.setSubTreeHeight(oldRoot.getSubTreeHeight() - subHeight);
-            oldRoot.setLevel(oldRoot.getLevel() + 1);
-            newRoot.setLevel(newRoot.getLevel() - 1);
-            if(newRoot.getRightChild() != null) {
-                newRoot.getRightChild().setLevel(newRoot.getRightChild().getLevel() - 1);
+            if(newRoot.getLeftChild() != null){
+                newRoot.getLeftChild().setParent(oldRoot);
             }
+            newRoot.setLeftChild(oldRoot);
+            oldRoot.setParent(newRoot);
 
             return newRoot;
         }
@@ -131,10 +121,8 @@ public class BalanceBinaryTree extends BinaryTree {
     public int add(Node addNode) throws NodeTypeErrorException {
         int height =  addAndUpdateLevel(addNode, 0);
         reshapeToBalance();
-        /**
-         * 更新树深度
-         */
-        updateHeight();
+        travelNodesBreathFirst(new UpdateNodeLevelConsumer(), root);
+        travelNodesDeepFirst(new UpdateTreeHeightConsumer(), root);
         return height;
     }
 

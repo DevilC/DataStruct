@@ -4,7 +4,7 @@ import Node.BinaryTreeNode;
 import Node.Node;
 import Util.NodeTypeErrorException;
 import Util.UpdateNodeLevelConsumer;
-import Util.UpdateTreeHeightConsumer;
+import Util.UpdateNodeSubTreeHeightConsumer;
 
 public class BalanceBinaryTree extends BinaryTree {
     public enum RotateType{
@@ -83,9 +83,6 @@ public class BalanceBinaryTree extends BinaryTree {
             }
             newRoot.setParent(oldRoot.getParent());
             oldRoot.setLeftChild(newRoot.getRightChild());
-            if(newRoot.getRightChild() != null){
-                newRoot.getRightChild().setParent(oldRoot);
-            }
             newRoot.setRightChild(oldRoot);
             oldRoot.setParent(newRoot);
 
@@ -101,9 +98,6 @@ public class BalanceBinaryTree extends BinaryTree {
             }
             newRoot.setParent(oldRoot.getParent());
             oldRoot.setRightChild(newRoot.getLeftChild());
-            if(newRoot.getLeftChild() != null){
-                newRoot.getLeftChild().setParent(oldRoot);
-            }
             newRoot.setLeftChild(oldRoot);
             oldRoot.setParent(newRoot);
 
@@ -122,7 +116,7 @@ public class BalanceBinaryTree extends BinaryTree {
         int height =  addAndUpdateLevel(addNode, 0);
         reshapeToBalance();
         travelNodesBreathFirst(new UpdateNodeLevelConsumer(), root);
-        travelNodesDeepFirst(new UpdateTreeHeightConsumer(), root);
+        travelNodesDeepFirst(new UpdateNodeSubTreeHeightConsumer(), root);
         return height;
     }
 

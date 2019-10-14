@@ -98,11 +98,11 @@ public class BinaryTreeNode extends Node {
 
     @Override
     public void initGraphField(int width, int height) {
-        double maxLeafNum = Math.pow(2, this.getLevel() + 1);
+        double maxLeafNum = Math.pow(2, this.getLevel());
         double circleRadius = Math.floor((double)width/(2*maxLeafNum));
         circleRadius = circleRadius > 20 ? 20 : circleRadius;
         circleRadius = circleRadius < 10 ? 10 : circleRadius;
-        double distance_X = width / maxLeafNum;
+        double distance_X = width / (2*maxLeafNum);
 
 
         double parentRadius = circleRadius;
@@ -149,8 +149,8 @@ public class BinaryTreeNode extends Node {
 
     @Override
     public String toString(){
-        //return "key: " + this.getKey() + ";level: " + this.getLevel() + ";subTreeHeight: " + this.getSubTreeHeight();
-        return ""+getSubTreeHeight();
+        return "key: " + this.getKey() + ";level: " + this.getLevel() + ";subTreeHeight: " + this.getSubTreeHeight();
+        //return ""+getSubTreeHeight();
     }
 
 

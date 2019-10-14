@@ -46,6 +46,7 @@ public abstract class TreeBase implements TreeOperation {
                 }
             }
         }
+        nodeConsumer.accept(root);
     }
 
 }

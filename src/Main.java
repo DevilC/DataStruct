@@ -39,19 +39,27 @@ public class Main {
         BalanceBinaryTree tree = new BalanceBinaryTree();
         Random r = new Random();
         r.setSeed(System.currentTimeMillis());
-        for(int i=0;i<10;i++){
-            int random = r.nextInt(100);
-            System.out.println(random);
-            tree.add(new BinaryTreeNode(random));
+//        for(int i=0;i<10;i++){
+//            int random = r.nextInt(100);
+//            System.out.println(random);
+//            tree.add(new BinaryTreeNode(random));
+//        }
+        int[] input = {59, 32, 30, 48, 62, 59, 98, 50};
+        for(int i=0; i<8; i++){
+            tree.add(new BinaryTreeNode(input[i]));
         }
+        tree.add(new BinaryTreeNode(84));
         int level = tree.getTreeHeight();
         System.out.println("tree height is: " + level);
-        int width = (int)(10 * Math.pow(2, (level + 1)));
+        int width = (int)(20 * Math.pow(2, (level + 1)));
         int height = 60 * (level+1);
         panelConsumer.setPreferredSize(new Dimension(width, height));
         tree.initNodeGraphField(width, height);
         tree.travelNodesBreathFirst(panelConsumer, tree.getRoot());
+        panelConsumer.removeAll();
+        panelConsumer.validate();
         jFrame.validate();
+
     }
 
     public static void createAndShowGUI(JFrame jFrame) {

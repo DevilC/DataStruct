@@ -138,6 +138,9 @@ public abstract class Node {
         for(int i=0; i<children.size(); i++){
             if(children.get(i) == oldChild){
                 children.set(i, newChild);
+                if(newChild != null){
+                    newChild.setParent(this);
+                }
                 return true;
             }
         }

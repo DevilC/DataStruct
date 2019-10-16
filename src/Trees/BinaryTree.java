@@ -64,7 +64,7 @@ public class BinaryTree extends TreeBase {
         }
         else{
             binaryTreeNode.setLevel(level + 1);
-            if(root.getKey() >= binaryTreeNode.getKey()){
+            if(root.getKey() > binaryTreeNode.getKey()){
                 if(!root.hasLeft()){
                     root.setLeftChild(binaryTreeNode);
                     root.updateSubTreeHeight();

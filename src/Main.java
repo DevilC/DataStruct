@@ -50,7 +50,6 @@ public class Main {
         }
         tree.add(new BinaryTreeNode(84));
         int level = tree.getTreeHeight();
-        System.out.println("tree height is: " + level);
         int width = (int)(20 * Math.pow(2, (level + 1)));
         int height = 60 * (level+1);
         panelConsumer.setPreferredSize(new Dimension(width, height));

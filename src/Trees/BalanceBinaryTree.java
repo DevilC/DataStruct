@@ -114,7 +114,11 @@ public class BalanceBinaryTree extends BinaryTree {
     @Override
     public int add(Node addNode) throws NodeTypeErrorException {
         int height =  addAndUpdateLevel(addNode, 0);
-        reshapeToBalance();
+        travelNodesDeepFirst(new UpdateNodeSubTreeHeightConsumer(), root);
+        BalanceBinaryTree reshapedTree = reshapeToBalance((BinaryTreeNode) addNode);
+        if(reshapedTree.getRoot().getParent() == null){
+            this.setRoot(reshapedTree.getRoot());
+        }
         travelNodesBreathFirst(new UpdateNodeLevelConsumer(), root);
         travelNodesDeepFirst(new UpdateNodeSubTreeHeightConsumer(), root);
         return height;
@@ -123,25 +127,22 @@ public class BalanceBinaryTree extends BinaryTree {
     /**
      * 添加或删除节点后重新旋转为平衡二叉树
      */
-    private void reshapeToBalance(){
-        if(root.hasLeft()){
-            BalanceBinaryTree leftSubTree = new BalanceBinaryTree(root.getLeftChild());
-            if( !leftSubTree.isBalance()){
-                leftSubTree.reshapeToBalance();
+    private BalanceBinaryTree reshapeToBalance(BinaryTreeNode addNode){
+        BalanceBinaryTree subTree = new BalanceBinaryTree(addNode);
+        BalanceBinaryTree reshapedTree = subTree;
+        if(!subTree.isBalance()){
+            subTree.doReshape();
+        } else{
+            if(addNode.getParent() != null){
+                reshapedTree = reshapeToBalance((BinaryTreeNode) addNode.getParent());
+            } else{
+                System.out.println("reshapeToBalance end!");
             }
         }
-        if(root.hasRight()){
-            BalanceBinaryTree rightSubTree = new BalanceBinaryTree(root.getRightChild());
-            if( !rightSubTree.isBalance()){
-                rightSubTree.reshapeToBalance();
-            }
-        }
-        if(!this.isBalance()){
-            doReshape();
-        }
+        return reshapedTree;
     }
 
-    private void doReshape(){
+    public void doReshape(){
         RotateType rotateType = RotateType.getRotateType(this);
         rotateType.doRotate(this);
     }

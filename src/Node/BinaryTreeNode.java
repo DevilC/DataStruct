@@ -10,10 +10,8 @@ public class BinaryTreeNode extends Node {
 
     //初始化children属性、subTreeHeight
     private void initChildren(){
-        children = new ArrayList<Node>(2);
         children.add(null);
         children.add(null);
-        this.subTreeHeight = 1;
     }
 
     /**
@@ -21,9 +19,7 @@ public class BinaryTreeNode extends Node {
      * @param key
      */
     public BinaryTreeNode(int key){
-        ArrayList<Integer> keys = new ArrayList<>(1);
-        keys.add(key);
-        this.setKeys(keys);
+        this.getKeys().add(key);
         initChildren();
     }
 
@@ -33,12 +29,8 @@ public class BinaryTreeNode extends Node {
      * @param object
      */
     public BinaryTreeNode(int key, Object object){
-        ArrayList<Integer> keys = new ArrayList<>(1);
-        keys.add(key);
-        ArrayList<Object> values = new ArrayList<>(1);
-        values.add(object);
-        this.setKeys(keys);
-        this.setValues(values);
+        this.getKeys().add(key);
+        this.getValues().add(object);
         initChildren();
     }
 

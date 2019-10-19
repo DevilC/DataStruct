@@ -3,22 +3,24 @@ package Node;
 import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Node {
     public Node parent;
 
-    public ArrayList<Node> children;
+    public ArrayList<Node> children = new ArrayList<>();
 
-    public Circle nodeCircle;
+    public Circle nodeCircle = new Circle();
 
-    private ArrayList<Integer> keys;
+    private ArrayList<Integer> keys = new ArrayList<>();
 
     private int level;
 
-    private ArrayList<Object> values;
+    private ArrayList<Object> values = new ArrayList<>();
 
-    //以此节点为根节点的子树高度
-    int subTreeHeight;
+    //以此节点为根节点的子树高度,初始化为1
+    int subTreeHeight = 1;
 
     /**
      * 更新节点子树高度，高度为最高孩子树高度+1
@@ -187,13 +189,29 @@ public abstract class Node {
         this.values.set(loc, value);
     }
 
-    //是否有孩子
+    /**
+     * 是否有非空孩子
+     * @return 若有非空孩子，则返回true；否则返回false
+     */
     public boolean hasChild(){
-        for(Node child: children){
-            if(child != null){
-                return true;
-            }
-        }
-        return false;
+        int realChildrenNum = getRealChildrenNum();
+        return realChildrenNum > 0;
+    }
+
+    /**
+     * 获得非空孩子个数
+     * @return Integer  非空孩子个数
+     */
+    public int getRealChildrenNum(){
+        List<Node> realChildrenList = this.children.stream().filter(child -> child != null).collect(Collectors.toList());
+        return realChildrenList.size();
+    }
+
+    /**
+     * 是否叶子节点
+     * @return 若是叶子节点，则返回true;否则返回false;
+     */
+    public boolean isLeaf(){
+        return !hasChild();
     }
 }

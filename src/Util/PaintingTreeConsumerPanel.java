@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class PaintingTreeConsumerPanel extends JPanel implements Consumer<Node>{
+    private static final long serialVersionUID = -5709042771771991196L;
+    
     ArrayList<Node> nodeList = new ArrayList<>();
     Object lock = new Object();
 

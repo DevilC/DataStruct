@@ -60,6 +60,11 @@ public class BinaryTree extends TreeBase {
             return level;
         }
         else{
+            if(root.getKey() == binaryTreeNode.getKey()){
+                //key已存在，返回添加失败
+                System.out.println("Failed to add:" + binaryTreeNode);
+                return -1;
+            }
             binaryTreeNode.setLevel(level + 1);
             if(root.getKey() > binaryTreeNode.getKey()){
                 if(!root.hasLeft()){

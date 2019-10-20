@@ -1,6 +1,5 @@
 import Node.BinaryTreeNode;
 import Trees.BalanceBinaryTree;
-import Trees.BinaryTree;
 import Util.NodeTypeErrorException;
 import Util.PaintingTreeConsumerPanel;
 
@@ -9,7 +8,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws NodeTypeErrorException {

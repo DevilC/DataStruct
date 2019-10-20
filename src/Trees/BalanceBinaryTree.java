@@ -114,13 +114,15 @@ public class BalanceBinaryTree extends BinaryTree {
     @Override
     public int add(Node addNode) throws NodeTypeErrorException {
         int height =  addAndUpdateLevel(addNode, 0);
-        travelNodesDeepFirst(new UpdateNodeSubTreeHeightConsumer(), root);
-        BalanceBinaryTree reshapedTree = reshapeToBalance((BinaryTreeNode) addNode);
-        if(reshapedTree.getRoot().getParent() == null){
-            this.setRoot(reshapedTree.getRoot());
+        if(height != -1){
+            travelNodesDeepFirst(new UpdateNodeSubTreeHeightConsumer(), root);
+            BalanceBinaryTree reshapedTree = reshapeToBalance((BinaryTreeNode) addNode);
+            if(reshapedTree.getRoot().getParent() == null){
+                this.setRoot(reshapedTree.getRoot());
+            }
+            travelNodesBreathFirst(new UpdateNodeLevelConsumer(), root);
+            travelNodesDeepFirst(new UpdateNodeSubTreeHeightConsumer(), root);
         }
-        travelNodesBreathFirst(new UpdateNodeLevelConsumer(), root);
-        travelNodesDeepFirst(new UpdateNodeSubTreeHeightConsumer(), root);
         return height;
     }
 

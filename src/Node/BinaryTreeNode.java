@@ -2,25 +2,16 @@ package Node;
 
 import javafx.scene.shape.Circle;
 
-import java.util.ArrayList;
-
 public class BinaryTreeNode extends Node {
     public static int LEFT_CHILD = 0;
     public static int RIGHT_CHILD = 1;
-
-    //初始化children属性、subTreeHeight
-    private void initChildren(){
-        children.add(null);
-        children.add(null);
-    }
 
     /**
      * 构造函数，输入key
      * @param key
      */
     public BinaryTreeNode(int key){
-        this.getKeys().add(key);
-        initChildren();
+        super(key);
     }
 
     /**
@@ -28,10 +19,8 @@ public class BinaryTreeNode extends Node {
      * @param key
      * @param object
      */
-    public BinaryTreeNode(int key, Object object){
-        this.getKeys().add(key);
-        this.getValues().add(object);
-        initChildren();
+    public BinaryTreeNode(int key, Object value){
+        super(key, value);
     }
 
     /**

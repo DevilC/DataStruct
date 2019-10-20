@@ -89,7 +89,19 @@ public abstract class Node {
     }
 
     Node(){
+        
+    }
 
+    Node(int key){
+        this.keys.add(key);
+        this.values.add(null);
+        initChildren();
+    }
+
+    Node(int key, Object value){
+        this.keys.add(key);
+        this.values.add(value);
+        initChildren();
     }
 
     /**
@@ -104,6 +116,10 @@ public abstract class Node {
 
     public ArrayList<Node> getChildren(){
         return this.children;
+    }
+
+    public void setChildren(ArrayList<Node> children){
+        this.children = children;
     }
 
     /**
@@ -213,5 +229,31 @@ public abstract class Node {
      */
     public boolean isLeaf(){
         return !hasChild();
+    }
+
+    /**
+     * 初始化children为null
+     */
+    public void initChildren(){
+        int sub = keys.size() + 1;
+        for(int i=0; i< sub; i++){
+            children.add(null);
+        }
+    }
+
+    /**
+     * 获取默认key值
+     * @return keys[0]
+     */
+    public int getKey(){
+        return keys.get(0);
+    }
+
+    /**
+     * 获取默认value,默认为第0个
+     * @return values[0]
+     */
+    public Object getValue(){
+        return values.get(0);
     }
 }

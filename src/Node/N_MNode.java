@@ -59,6 +59,20 @@ public class N_MNode extends Node {
         newValues.addAll(leftPartValues);newValues.add(value);newValues.addAll(rightPartValues);
         List<Node> newChildren = new ArrayList<>();
 
+        //第一种情况:插入的为新节点,发生在叶子节点,孩子全为null
+        if(!targetNode.hasChild()){
+            newChildren.addAll(this.getChildren());
+            newChildren.add(null);
+        } else{//第二种情况：节点向上生长
+            List<Node> oldChildren = this.getChildren();
+            oldChildren.set(insertLoc, targetNode.getChild(0));
+            List<Node> leftPartChildren = oldChildren.subList(0, insertLoc);
+            List<Node> rightPartChildren = oldChildren.subList(insertLoc + 1, oldChildren.size());
+            newChildren.addAll(leftPartChildren);
+            newChildren.add(this.getChild(1));
+            newChildren.addAll(rightPartChildren);
+        }
+
         
         if(newKeys.size() == M){
             growUpReshape();
@@ -67,26 +81,6 @@ public class N_MNode extends Node {
 
 
     public void growUpReshape(){
-        ArrayList<Integer> newKeys = new ArrayList<>(M - 1);
-        ArrayList<Object> newValues = new ArrayList<>(M - 1);
-        ArrayList<Node> newChildren = new ArrayList<>(M);
-        int removeLoc = M - 2;
-        for(int i=0; i < M; i++){
-            if(i == removeLoc){
-                continue;
-            }
-            newKeys.add(this.getKey(i));
-            newValues.add(this.getValue(i));
-        }
-        this.setKeys(newKeys);
-        this.setValues(newValues);        
-        for(int i=0; i <= M; i++){
-            if(i == (removeLoc + 1)){
-                continue;
-            }
-            newChildren.add(this.getChildren().get(i));
-        }
-        this.setChildren(newChildren);
 
     }
 

@@ -1,5 +1,6 @@
 import Node.BinaryTreeNode;
 import Trees.BalanceBinaryTree;
+import Util.KeyExistException;
 import Util.NodeTypeErrorException;
 import Util.PaintingTreeConsumerPanel;
 
@@ -9,8 +10,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.Random;
 
-public class Main {
-    public static void main(String[] args) throws NodeTypeErrorException {
+public class TestBalanceTree {
+    public static void main(String[] args) {
 
 //        BinaryTreeNode root = new BinaryTreeNode(55);
 //        BinaryTree tree = new BinaryTree(root);
@@ -42,11 +43,14 @@ public class Main {
 //            System.out.println(random);
 //            tree.add(new BinaryTreeNode(random));
 //        }
-        int[] input = {59, 32, 30, 48, 62, 59, 98, 50};
-        for(int i=0; i<8; i++){
-            tree.add(new BinaryTreeNode(input[i]));
+        int[] input = {59, 32, 30, 48, 62, 59, 98, 50, 84};
+        for(int i=0; i<9; i++){
+            try {
+                tree.add(new BinaryTreeNode(input[i]));
+            } catch (NodeTypeErrorException | KeyExistException e1) {
+                System.out.println("Failed to add key: " + input[i]);
+            }
         }
-        tree.add(new BinaryTreeNode(84));
         int level = tree.getTreeHeight();
         int width = (int)(20 * Math.pow(2, (level + 1)));
         int height = 60 * (level+1);

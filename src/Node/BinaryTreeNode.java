@@ -61,9 +61,6 @@ public class BinaryTreeNode extends Node {
      */
     public void setLeftChild(BinaryTreeNode targetNode){
         this.setChild(LEFT_CHILD, targetNode);
-        if(targetNode != null) {
-            targetNode.setParent(this);
-        }
     }
 
     /**
@@ -72,9 +69,6 @@ public class BinaryTreeNode extends Node {
      */
     public void setRightChild(BinaryTreeNode targetNode){
         this.setChild(RIGHT_CHILD, targetNode);
-        if(targetNode != null) {
-            targetNode.setParent(this);
-        }
     }
 
     @Override

@@ -9,15 +9,15 @@ import java.util.stream.Collectors;
 public abstract class Node {
     public Node parent;
 
-    public ArrayList<Node> children = new ArrayList<>();
+    public List<Node> children = new ArrayList<>();
 
     public Circle nodeCircle = new Circle();
 
-    private ArrayList<Integer> keys = new ArrayList<>();
+    private List<Integer> keys = new ArrayList<>();
 
     private int level;
 
-    private ArrayList<Object> values = new ArrayList<>();
+    private List<Object> values = new ArrayList<>();
 
     //以此节点为根节点的子树高度,初始化为1
     int subTreeHeight = 1;
@@ -86,6 +86,7 @@ public abstract class Node {
      */
     public Node(ArrayList<Integer> keys){
         this.keys = keys;
+        initChildren();
     }
 
     Node(){
@@ -114,11 +115,11 @@ public abstract class Node {
         this.values = values;
     }
 
-    public ArrayList<Node> getChildren(){
+    public List<Node> getChildren(){
         return this.children;
     }
 
-    public void setChildren(ArrayList<Node> children){
+    public void setChildren(List<Node> children){
         this.children = children;
     }
 
@@ -138,6 +139,10 @@ public abstract class Node {
      */
     public void setChild(int loc, Node targetNode){
         children.set(loc, targetNode);
+        if(targetNode != null){
+            targetNode.setParent(this);
+        }
+        
     }
 
     /**
@@ -165,11 +170,11 @@ public abstract class Node {
         return false;
     }
 
-    public ArrayList<Integer> getKeys() {
+    public List<Integer> getKeys() {
         return keys;
     }
 
-    public void setKeys(ArrayList<Integer> keys) {
+    public void setKeys(List<Integer> keys) {
         this.keys = keys;
     }
 
@@ -181,11 +186,11 @@ public abstract class Node {
         this.level = level;
     }
 
-    public ArrayList<Object> getValues() {
+    public List<Object> getValues() {
         return values;
     }
 
-    public void setValues(ArrayList<Object> values) {
+    public void setValues(List<Object> values) {
         this.values = values;
     }
 

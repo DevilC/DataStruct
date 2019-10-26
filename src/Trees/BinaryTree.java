@@ -2,11 +2,12 @@ package Trees;
 
 import Node.Node;
 import Node.BinaryTreeNode;
+import Util.KeyExistException;
 import Util.NodeGraphInitConsumer;
 import Util.NodeTypeErrorException;
 import java.util.List;
 
-public class BinaryTree extends TreeBase {
+public class BinaryTree extends TreeBase<BinaryTreeNode> {
     public BinaryTreeNode root;
 
     public BinaryTree(BinaryTreeNode root){
@@ -21,7 +22,7 @@ public class BinaryTree extends TreeBase {
     }
 
     @Override
-    public void setRoot(Node root) {
+    public void setRoot(BinaryTreeNode root) {
         this.root = (BinaryTreeNode) root;
         updateHeight();
     }
@@ -32,7 +33,7 @@ public class BinaryTree extends TreeBase {
     };
 
     @Override
-    public int add(Node addNode) throws NodeTypeErrorException {
+    public int add(BinaryTreeNode addNode) throws NodeTypeErrorException, KeyExistException {
         int level =  addAndUpdateLevel(addNode, 0);
         /**
          * 更新树高度
@@ -42,13 +43,15 @@ public class BinaryTree extends TreeBase {
     }
 
     /**
-     *  递归添加节点并更新树深度
+     * 递归添加节点并更新树深度
+     * 
      * @param addNode 待添加的节点
-     * @param level 目前递归深度
+     * @param level   目前递归深度
      * @return
      * @throws NodeTypeErrorException
+     * @throws KeyExistException
      */
-    public int addAndUpdateLevel(Node addNode, int level) throws NodeTypeErrorException {
+    public int addAndUpdateLevel(Node addNode, int level) throws NodeTypeErrorException, KeyExistException {
         if(!(addNode instanceof BinaryTreeNode)){
             NodeTypeErrorException exception = new NodeTypeErrorException("Can't add a Node.Node except type Trees.BinaryTreeNode!");
             throw(exception);
@@ -63,7 +66,7 @@ public class BinaryTree extends TreeBase {
             if(root.getKey() == binaryTreeNode.getKey()){
                 //key已存在，返回添加失败
                 System.out.println("Failed to add:" + binaryTreeNode);
-                return -1;
+                throw new KeyExistException("Failed to add node:" + binaryTreeNode);
             }
             binaryTreeNode.setLevel(level + 1);
             if(root.getKey() > binaryTreeNode.getKey()){
@@ -99,12 +102,12 @@ public class BinaryTree extends TreeBase {
     }
 
     @Override
-    public boolean remove(Node removeNode) {
+    public boolean remove(BinaryTreeNode removeNode) {
         return false;
     }
 
     @Override
-    public List<Node> toList() {
+    public List<BinaryTreeNode> toList() {
         return null;
     }
 

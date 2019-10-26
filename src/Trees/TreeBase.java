@@ -3,10 +3,30 @@ package Trees;
 import Node.Node;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.function.Consumer;
 
-public abstract class TreeBase implements TreeOperation {
+public abstract class TreeBase<T extends Node> implements TreeOperation<T> {
+    /**
+     * 根节点
+     */
+    T root;
+
+    /**
+     * getRoot
+     */
+    public T getRoot(){
+        return this.root;
+    }
+
+    /**
+     * setRoot
+     */
+    public void setRoot(T rootNode){
+        this.root = rootNode;
+    }
+
     int treeHeight = 0;
     public int getTreeHeight() {
         return treeHeight;
@@ -49,4 +69,22 @@ public abstract class TreeBase implements TreeOperation {
         nodeConsumer.accept(root);
     }
 
+    public T findTargetNode(T addNode){
+        return recurrentFindLeaf(addNode, root);
+    }
+
+    private T recurrentFindLeaf(T addNode, T targetNode){
+        List<Integer> keys = targetNode.getKeys();
+        int insertLoc = 0;
+        for(insertLoc= 0;insertLoc < keys.size(); insertLoc++){
+            if(keys.get(insertLoc) > addNode.getKey()){
+                break;
+            } 
+        }
+        if(targetNode.getChild(insertLoc) == null){
+            return targetNode;
+        } else{
+            return recurrentFindLeaf(addNode, (T) targetNode.getChild(insertLoc));
+        }
+    }
 }

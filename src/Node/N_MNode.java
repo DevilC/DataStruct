@@ -125,10 +125,7 @@ public class N_MNode extends Node {
 
      @Override
     public void initGraphField(int width, int height) {
-        double maxLeafNum = M * Math.pow(2, this.getLevel());
-        if(this.getParent() != null){
-            maxLeafNum = this.getParent().getChildren().size() *  Math.pow(2, this.getLevel());
-        }
+        double maxLeafNum = Math.pow(M, this.getLevel());
         double circleRadius = 20;
         double distance_X = width / (2*maxLeafNum);
 
@@ -137,10 +134,10 @@ public class N_MNode extends Node {
         double x = 0;
         double y = 0;
         if(parent != null){
-            double middle = M / 2.0;
+            double middle = (M-1) / 2.0;
             for(int i = 0; i < parent.getChildren().size(); i++){
                 if(this == parent.getChild(i)){
-                    x = parent.nodeCircle.getCenterX() + (i - middle + 1) * distance_X;
+                    x = parent.nodeCircle.getCenterX() + (i - middle) * distance_X;
                     y = parent.nodeCircle.getCenterY() + 3 * parentRadius;
                 }
             }

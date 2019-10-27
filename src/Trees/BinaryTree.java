@@ -8,8 +8,6 @@ import Util.NodeTypeErrorException;
 import java.util.List;
 
 public class BinaryTree extends TreeBase<BinaryTreeNode> {
-    public BinaryTreeNode root;
-
     public BinaryTree(BinaryTreeNode root){
         this.root = root;
     }

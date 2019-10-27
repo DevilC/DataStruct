@@ -1,3 +1,5 @@
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
@@ -31,9 +33,9 @@ class TestN_MTree {
 
 
         int M = 3;
-        int[] input = { 59, 32, 30, 48, 62, 98, 50, 84 ,100, 105, 21, 10, 15, 14};
+        int[] input = { 59, 32, 30, 48, 62, 98, 50, 84 ,100, 105, 21, 10, 15, 14, 1000, 1042, 108, 182, 234, 235, 542, 128};
         N_MTree tree = new N_MTree();
-        for (int i = 0; i < 14; i++) {
+        for (int i = 0; i < input.length; i++) {
             N_MNode node = new N_MNode(input[i], M);
             try {
                 tree.add(node);
@@ -49,9 +51,10 @@ class TestN_MTree {
         tree.travelNodesDeepFirst(new UpdateNodeSubTreeHeightConsumer());
         tree.updateHeight();
         int level = tree.getTreeHeight();
-        int width = M * (int)(20 * Math.pow(2, (level + 1)));
+        int width = (int)(20 * Math.pow(M, (level + 1)));
         int height = 60 * (level+1);
-        tree.travelNodesBreathFirst(new NodeGraphInitConsumer(2000, height));
+        panelConsumer.setPreferredSize(new Dimension(width, height));
+        tree.travelNodesBreathFirst(new NodeGraphInitConsumer(width, height));
         tree.travelNodesBreathFirst(panelConsumer);
         panelConsumer.removeAll();
         panelConsumer.validate();

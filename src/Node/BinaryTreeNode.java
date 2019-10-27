@@ -75,8 +75,7 @@ public class BinaryTreeNode extends Node {
     public void initGraphField(int width, int height) {
         double maxLeafNum = Math.pow(2, this.getLevel());
         double circleRadius = Math.floor((double)width/(2*maxLeafNum));
-        circleRadius = circleRadius > 20 ? 20 : circleRadius;
-        circleRadius = circleRadius < 10 ? 10 : circleRadius;
+        circleRadius = 20;
         double distance_X = width / (2*maxLeafNum);
 
 

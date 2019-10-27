@@ -17,17 +17,6 @@ public class BinaryTree extends TreeBase<BinaryTreeNode> {
     public BinaryTree(){};
 
     @Override
-    public BinaryTreeNode getRoot() {
-        return this.root;
-    }
-
-    @Override
-    public void setRoot(BinaryTreeNode root) {
-        this.root = (BinaryTreeNode) root;
-        updateHeight();
-    }
-
-    @Override
     public BinaryTreeNode getNode(int key) {
         return new BinaryTreeNode(key);
     };
@@ -97,10 +86,6 @@ public class BinaryTree extends TreeBase<BinaryTreeNode> {
         }
     }
 
-    protected void updateHeight(){
-        this.treeHeight = root.getSubTreeHeight();
-    }
-
     @Override
     public boolean remove(BinaryTreeNode removeNode) {
         return false;
@@ -114,15 +99,6 @@ public class BinaryTree extends TreeBase<BinaryTreeNode> {
     @Override
     public void Draw() {
 
-    }
-
-    /**
-     * 生成节点中的画图相关属性
-     * @param width  画布宽度
-     * @param height  画布高度
-     */
-    public void initNodeGraphField(int width, int height){
-        travelNodesBreathFirst(new NodeGraphInitConsumer(width, height), this.root);
     }
 
 //    @Override

@@ -1,14 +1,39 @@
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.event.ChangeEvent;
+
 import Node.N_MNode;
 import Trees.N_MTree;
 import Util.KeyExistException;
+import Util.NodeGraphInitConsumer;
 import Util.NodeTypeErrorException;
+import Util.PaintingTreeConsumerPanel;
+import Util.UpdateNodeLevelConsumer;
+import Util.UpdateNodeSubTreeHeightConsumer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 class TestN_MTree {
     public static void main(String agrs[]) {
+        JFrame jFrame = new JFrame();
+        createAndShowGUI(jFrame);
+
+        PaintingTreeConsumerPanel panelConsumer = new PaintingTreeConsumerPanel();
+
+        JScrollPane jsp = new JScrollPane(panelConsumer);
+        jFrame.getContentPane().add(jsp);
+        jsp.getViewport().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                jFrame.repaint();
+            }
+        });
+
+
         int M = 3;
-        int[] input = { 59, 32, 30, 48, 62, 59, 98, 50, 84 };
+        int[] input = { 59, 32, 30, 48, 62, 98, 50, 84 ,100, 105, 21, 10, 15, 14};
         N_MTree tree = new N_MTree();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 14; i++) {
             N_MNode node = new N_MNode(input[i], M);
             try {
                 tree.add(node);
@@ -20,6 +45,29 @@ class TestN_MTree {
                 e.printStackTrace();
             }
         }
+        tree.travelNodesBreathFirst(new UpdateNodeLevelConsumer());
+        tree.travelNodesDeepFirst(new UpdateNodeSubTreeHeightConsumer());
+        tree.updateHeight();
+        int level = tree.getTreeHeight();
+        int width = M * (int)(20 * Math.pow(2, (level + 1)));
+        int height = 60 * (level+1);
+        tree.travelNodesBreathFirst(new NodeGraphInitConsumer(2000, height));
+        tree.travelNodesBreathFirst(panelConsumer);
+        panelConsumer.removeAll();
+        panelConsumer.validate();
+        jFrame.validate();
 
+    }
+
+    public static void createAndShowGUI(JFrame jFrame) {
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
+        // 创建及设置窗口
+        jFrame.setSize(1000, 500);
+        jFrame.setBounds(0, 0, 1000, 500);
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // 显示窗口
+        jFrame.setVisible(true);
     }
 }

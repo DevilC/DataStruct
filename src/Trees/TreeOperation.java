@@ -57,6 +57,7 @@ public interface TreeOperation<T extends Node> {
      * 找到插入的节点
      * @param addNode
      * @return
+     * @throws KeyExistException
      */
-    T findTargetNode(T addNode);
+    T findTargetNode(T addNode) throws KeyExistException;
 }

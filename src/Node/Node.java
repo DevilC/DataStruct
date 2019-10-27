@@ -121,6 +121,11 @@ public abstract class Node {
 
     public void setChildren(List<Node> children){
         this.children = children;
+        for(Node child: children){
+            if(child != null){
+                child.setParent(this); 
+            }
+        }
     }
 
     /**
@@ -260,5 +265,9 @@ public abstract class Node {
      */
     public Object getValue(){
         return values.get(0);
+    }
+
+    public String toString(){
+        return "keys: " + this.keys + "level: " + this.level;
     }
 }

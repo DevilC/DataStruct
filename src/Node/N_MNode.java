@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Util.KeyExistException;
+import javafx.scene.shape.Circle;
 
 public class N_MNode extends Node {
     /**
@@ -17,13 +18,11 @@ public class N_MNode extends Node {
     public N_MNode(int key, int M){
         super(key);
         this.M = M;
-        initChildren();
     }
 
     public N_MNode(int key, Object value, int M){
         super(key, value);
         this.M = M;
-        initChildren();
     }
 
     public N_MNode(List<Integer> keys, List<Object> values, int M){
@@ -49,6 +48,7 @@ public class N_MNode extends Node {
         for(int i = 0; i < this.getKeys().size(); i++){
             if(this.getKey(i) > key){
                 insertLoc = i;
+                break;
             }
         }
         List<Integer> leftPartKeys = this.getKeys().subList(0, insertLoc);
@@ -72,7 +72,7 @@ public class N_MNode extends Node {
             List<Node> leftPartChildren = oldChildren.subList(0, insertLoc);
             List<Node> rightPartChildren = oldChildren.subList(insertLoc + 1, oldChildren.size());
             newChildren.addAll(leftPartChildren);
-            newChildren.add(this.getChild(1));
+            newChildren.addAll(targetNode.getChildren());
             newChildren.addAll(rightPartChildren);
         }
 
@@ -104,9 +104,13 @@ public class N_MNode extends Node {
         List<Object> leftChildValues = this.getValues().subList(0, middle_loc);
         List<Integer> rightChildkeys = this.getKeys().subList(middle_loc + 1, this.getKeys().size());
         List<Object> rightChildValues = this.getValues().subList(middle_loc + 1, this.getKeys().size());
+        List<Node> leftChildChildren = this.getChildren().subList(0, middle_loc + 1);
+        List<Node> rightChildChildren = this.getChildren().subList(middle_loc + 1, this.getChildren().size());
 
         N_MNode leftChild = new N_MNode(leftChildkeys, leftChildValues, M);
+        leftChild.setChildren(leftChildChildren);
         N_MNode rightChild = new N_MNode(rightChildkeys, rightChildValues, M);
+        rightChild.setChildren(rightChildChildren);
 
         splitNode.setChild(0, leftChild);    
         splitNode.setChild(1, rightChild);
@@ -119,8 +123,37 @@ public class N_MNode extends Node {
 
     }
 
-    @Override
+     @Override
     public void initGraphField(int width, int height) {
-        // TODO Auto-generated method stub
+        double maxLeafNum = M * Math.pow(2, this.getLevel());
+        if(this.getParent() != null){
+            maxLeafNum = this.getParent().getChildren().size() *  Math.pow(2, this.getLevel());
+        }
+        double circleRadius = 20;
+        double distance_X = width / (2*maxLeafNum);
 
-    }}
+
+        double parentRadius = circleRadius;
+        double x = 0;
+        double y = 0;
+        if(parent != null){
+            double middle = M / 2.0;
+            for(int i = 0; i < parent.getChildren().size(); i++){
+                if(this == parent.getChild(i)){
+                    x = parent.nodeCircle.getCenterX() + (i - middle + 1) * distance_X;
+                    y = parent.nodeCircle.getCenterY() + 3 * parentRadius;
+                }
+            }
+        } else{
+            System.out.println("is the root");
+            x = distance_X;
+            y = 0;
+        }
+        this.nodeCircle = new Circle();
+        nodeCircle.setCenterX(x);
+        nodeCircle.setCenterY(y);
+        nodeCircle.setRadius(circleRadius);
+//        nodeCircle.setAccessibleText(String.valueOf(getKey()));
+        nodeCircle.setAccessibleText(this.toString());
+    }
+}

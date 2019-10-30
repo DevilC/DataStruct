@@ -40,7 +40,6 @@ public class PaintingTreeConsumerPanel extends JPanel implements Consumer<Node>{
             if (node != null && node.nodeCircle != null && !nodeList.contains(node)) {
                 nodeList.add(node);
             }
-            this.repaint();
         }
     }
 

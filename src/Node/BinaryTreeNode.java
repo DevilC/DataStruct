@@ -71,40 +71,6 @@ public class BinaryTreeNode extends Node {
         this.setChild(RIGHT_CHILD, targetNode);
     }
 
-    @Override
-    public void initGraphField(int width, int height) {
-        double maxLeafNum = Math.pow(2, this.getLevel());
-        double circleRadius = Math.floor((double)width/(2*maxLeafNum));
-        circleRadius = 20;
-        double distance_X = width / (2*maxLeafNum);
-
-
-        double parentRadius = circleRadius;
-        double x;
-        double y;
-        if(parent != null){
-            parentRadius = parent.nodeCircle.getRadius();
-            //左节点
-            if(this == parent.getChild(LEFT_CHILD)){
-                x = parent.nodeCircle.getCenterX() - distance_X;
-                y = parent.nodeCircle.getCenterY() + 3 * parentRadius;
-            } else{
-                x = parent.nodeCircle.getCenterX() + distance_X;
-                y = parent.nodeCircle.getCenterY() + 3 * parentRadius;
-            }
-        } else{
-            System.out.println("is the root");
-            x = distance_X;
-            y = 0;
-        }
-        this.nodeCircle = new Circle();
-        nodeCircle.setCenterX(x);
-        nodeCircle.setCenterY(y);
-        nodeCircle.setRadius(circleRadius);
-//        nodeCircle.setAccessibleText(String.valueOf(getKey()));
-        nodeCircle.setAccessibleText(this.toString());
-    }
-
     /**
      * 获取键值
      * @return
@@ -127,6 +93,8 @@ public class BinaryTreeNode extends Node {
         //return ""+getSubTreeHeight();
     }
 
-
+    public void initGraphField(int width, int height){
+        super.initGraphField(width, height, 2);
+    }
 
 }

@@ -52,10 +52,10 @@ public class TestBalanceTree {
             }
         }
         int level = tree.getTreeHeight();
-        int width = (int)(20 * Math.pow(2, (level + 1)));
+        int width = (int)(20 * Math.pow(2, (level + 2)));
         int height = 60 * (level+1);
-        panelConsumer.setPreferredSize(new Dimension(width, height));
-        tree.initNodeGraphField(width, height);
+        panelConsumer.setPreferredSize(new Dimension(1000, 500));
+        tree.initNodeGraphField(1000, 500);
         tree.travelNodesBreathFirst(panelConsumer, tree.getRoot());
         panelConsumer.removeAll();
         panelConsumer.validate();

@@ -118,39 +118,12 @@ public class N_MNode extends Node {
         return splitNode;
     }
 
+    public void initGraphField(int width, int height){
+        super.initGraphField(width, height, M);
+    }
+
 
     public void growUpReshape(){
 
-    }
-
-     @Override
-    public void initGraphField(int width, int height) {
-        double maxLeafNum = Math.pow(M, this.getLevel());
-        double circleRadius = 20;
-        double distance_X = width / (2*maxLeafNum);
-
-
-        double parentRadius = circleRadius;
-        double x = 0;
-        double y = 0;
-        if(parent != null){
-            double middle = (M-1) / 2.0;
-            for(int i = 0; i < parent.getChildren().size(); i++){
-                if(this == parent.getChild(i)){
-                    x = parent.nodeCircle.getCenterX() + (i - middle) * distance_X;
-                    y = parent.nodeCircle.getCenterY() + 3 * parentRadius;
-                }
-            }
-        } else{
-            System.out.println("is the root");
-            x = distance_X;
-            y = 0;
-        }
-        this.nodeCircle = new Circle();
-        nodeCircle.setCenterX(x);
-        nodeCircle.setCenterY(y);
-        nodeCircle.setRadius(circleRadius);
-//        nodeCircle.setAccessibleText(String.valueOf(getKey()));
-        nodeCircle.setAccessibleText(this.toString());
     }
 }
